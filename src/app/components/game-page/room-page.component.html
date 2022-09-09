@@ -1,1 +1,10 @@
-<p>room-page works!</p>
+<div *ngIf="!roomIsActive">The room is not found!</div>
+
+<div *ngIf="roomIsActive">
+    <form *ngIf="!nameIsAssigned" [formGroup]="userInfo" (ngSubmit)="onSubmit()">
+        <label>Enter your name first</label>
+        <input id="name" type="text" formControlName="name">
+        <button type="submit">set name</button>
+    </form>
+</div>
+
