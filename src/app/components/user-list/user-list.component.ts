@@ -11,6 +11,7 @@ import {MessageType} from "../../interfaces/message";
 })
 export class UserListComponent implements OnInit {
     public activeUsers: IUserEstimate[] = [];
+    public cardsIsHidden: boolean = true;
     private _sub: Subscription = Subscription.EMPTY;
 
     constructor(
@@ -23,9 +24,16 @@ export class UserListComponent implements OnInit {
             switch (msg.type) {
                 case MessageType.Reset:
                     this.activeUsers = [];
+                    this.cardsIsHidden = true;
                     break;
                 case MessageType.Estimates:
+                    this.activeUsers = msg.estimates;
+                    this.cardsIsHidden = true;
+                    break
                 case MessageType.FinalEstimate:
+                    this.activeUsers = msg.estimates;
+                    this.cardsIsHidden = false;
+                    break
                 case MessageType.UserLeave:
                     this.activeUsers = msg.estimates;
                     break;
