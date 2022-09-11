@@ -1,10 +1,18 @@
 <div *ngIf="!roomIsActive">The room is not found!</div>
 
 <div *ngIf="roomIsActive">
-    <form *ngIf="!nameIsAssigned" [formGroup]="userInfo" (ngSubmit)="onSubmit()">
+    <form *ngIf="!name" [formGroup]="userInfo" (ngSubmit)="onSubmit()">
         <label>Enter your name first</label>
         <input id="name" type="text" formControlName="name">
         <button type="submit">set name</button>
     </form>
+
+    <ng-container *ngIf="name">
+        <app-user-list></app-user-list>
+
+        <app-estimate-view></app-estimate-view>
+
+        <app-game-field [name]="name"></app-game-field>
+    </ng-container>
 </div>
 

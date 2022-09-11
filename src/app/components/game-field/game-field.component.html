@@ -1,1 +1,6 @@
-<p>game-field works!</p>
+<button
+    *ngFor="let est of estimates"
+    (click)="sendEstimate(est)"
+>
+    {{est}}
+</button>

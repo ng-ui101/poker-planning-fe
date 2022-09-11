@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {HttpService} from "../../services/http.service";
-import {Router} from "@angular/router";
-import {WebSocketSubject} from "rxjs/internal/observable/dom/WebSocketSubject";
-import { FormBuilder } from '@angular/forms';
+import {ActivatedRoute} from "@angular/router";
+import {FormBuilder} from '@angular/forms';
 import {Subscription} from "rxjs";
+import {WebSocketService} from "../../services/web-socket.service";
+import {MessageType} from "../../interfaces/message";
 
 const SOCKET = 'ws://127.0.0.1:8000'
 
@@ -15,42 +16,51 @@ const SOCKET = 'ws://127.0.0.1:8000'
 export class RoomPageComponent implements OnInit, OnDestroy {
     public roomId: string = '';
     public roomIsActive: boolean = false;
-    public nameIsAssigned: boolean = false;
-    private _websocket$: WebSocketSubject<any>;
+    public name: string = '';
     private _sub: Subscription = Subscription.EMPTY;
+    private _querySub: Subscription = Subscription.EMPTY;
 
-    public userInfo = this.formBuilder.group({
+    public userInfo = this._formBuilder.group({
         name: '',
     });
 
     constructor(
         private _httpService: HttpService,
-        private _router: Router,
-        private formBuilder: FormBuilder,
+        private _formBuilder: FormBuilder,
+        private _webSocketService: WebSocketService,
+        private _activatedRoute: ActivatedRoute
     ) {
     }
 
     public ngOnInit(): void {
-        this.roomId = this._router.url.slice(1)
+        this._querySub = this._activatedRoute.queryParams.subscribe(
+            (queryParam: any) => {
+                this.roomId = queryParam['id'];
+            }
+        );
+
         this._httpService.getRoom(this.roomId).subscribe((response) => {
             this.roomIsActive = response.roomIsActive;
-            this._websocket$ = new WebSocketSubject<any>(`${SOCKET}/${this.roomId}`)
+            this._webSocketService.initWebsocket(`${SOCKET}/${this.roomId}`);
         });
     }
 
-    public onSubmit(){
-        this._sub = this._websocket$.subscribe();
+    public onSubmit() {
+        this._sub = this._webSocketService.websocket$.subscribe();
 
-        this._websocket$.next({
-            action: {
-                type: 'setUserName',
-                data: this.userInfo.value
-            },
-        });
-        this.nameIsAssigned = true;
+        this._webSocketService.websocket$.next({type: MessageType.SetUserName});
+        this.name = this.userInfo.value.name!;
     }
 
-    ngOnDestroy(): void {
+    @HostListener('window:beforeunload')
+    public sendUserLeaveEvent() {
+        this._webSocketService.websocket$.next({
+            type: MessageType.UserLeave,
+        })
+    }
+
+    public ngOnDestroy(): void {
         this._sub.unsubscribe();
+        this._querySub.unsubscribe();
     }
 }

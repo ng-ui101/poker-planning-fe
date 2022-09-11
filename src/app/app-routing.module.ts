@@ -5,7 +5,7 @@ import {RoomPageComponent} from "./components/game-page/room-page.component";
 
 const routes: Routes = [
     { path: '', component: InitPageComponent },
-    { path: '**', component: RoomPageComponent }
+    { path: 'room', component: RoomPageComponent }
 ];
 
 @NgModule({

@@ -1,1 +1,8 @@
 <p>user-list works!</p>
+
+<table>
+    <tr *ngFor="let usr of activeUsers">
+        <td>{{usr.name}}</td>
+        <td>{{usr.estimate}}</td>
+    </tr>
+</table>

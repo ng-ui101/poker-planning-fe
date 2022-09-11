@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {WebSocketService} from "../../services/web-socket.service";
+import {MessageType} from "../../interfaces/message";
 
 @Component({
-  selector: 'app-game-field',
-  templateUrl: './game-field.component.html',
-  styleUrls: ['./game-field.component.scss']
+    selector: 'app-game-field',
+    templateUrl: './game-field.component.html',
+    styleUrls: ['./game-field.component.scss']
 })
-export class GameFieldComponent implements OnInit {
+export class GameFieldComponent {
+    @Input() name: string = '';
+    public estimates: number[] = [0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100];
 
-  constructor() { }
+    constructor(
+        private _webSocketService: WebSocketService,
+    ) {
+    }
 
-  ngOnInit(): void {
-  }
-
+    public sendEstimate(estimate: number) {
+        this._webSocketService.websocket$.next({
+            type: MessageType.SetEstimate,
+            name: this.name,
+            estimate
+        })
+    }
 }

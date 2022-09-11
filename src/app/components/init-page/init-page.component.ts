@@ -20,7 +20,7 @@ export class InitPageComponent implements OnInit {
 
     public createRoom() {
         this._httpService.createRoom().subscribe((response) => {
-            this._router.navigateByUrl(response.roomId);
+            this._router.navigate(['room'],{ queryParams: { id: response.roomId }})
         })
     }
 }
