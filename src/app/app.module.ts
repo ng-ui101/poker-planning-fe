@@ -12,6 +12,8 @@ import {RoomPageComponent} from './components/room-page/room-page.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ENVIRONMENT} from "./services/environment.service";
+import {environment} from "../environments/environment";
 
 @NgModule({
     declarations: [
@@ -30,7 +32,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         RouterModule,
         ReactiveFormsModule
     ],
-    providers: [],
+    providers: [{ provide: ENVIRONMENT, useValue: environment }],
     bootstrap: [AppComponent]
 })
 export class AppModule {

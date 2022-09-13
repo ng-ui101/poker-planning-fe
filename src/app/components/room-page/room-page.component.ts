@@ -5,8 +5,7 @@ import {FormBuilder} from '@angular/forms';
 import {Subscription} from "rxjs";
 import {WebSocketService} from "../../services/web-socket.service";
 import {OutgoingMessageType} from "../../interfaces/message";
-
-const SOCKET = 'ws://127.0.0.1:8000'
+import {EnvironmentService} from "../../services/environment.service";
 
 @Component({
     selector: 'app-room-page',
@@ -20,19 +19,23 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     public roomId: string = '';
     public roomIsActive: boolean = false;
     public name: string = '';
-    private _sub: Subscription = Subscription.EMPTY;
-    private _querySub: Subscription = Subscription.EMPTY;
 
     public userInfo = this._formBuilder.group({
         name: '',
     });
 
+    private _sub: Subscription = Subscription.EMPTY;
+    private _querySub: Subscription = Subscription.EMPTY;
+    private readonly _url: string;
+
     constructor(
         private _httpService: HttpService,
         private _formBuilder: FormBuilder,
         private _webSocketService: WebSocketService,
-        private _activatedRoute: ActivatedRoute
+        private _activatedRoute: ActivatedRoute,
+        private _environmentService: EnvironmentService
     ) {
+        this._url = this._environmentService.getValue('wsUrl');
     }
 
     public ngOnInit(): void {
@@ -44,7 +47,7 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
         this._httpService.getRoom(this.roomId).subscribe((response) => {
             this.roomIsActive = response.roomIsActive;
-            this._webSocketService.initWebsocket(`${SOCKET}/${this.roomId}`);
+            this._webSocketService.initWebsocket(`${this._url}/${this.roomId}`);
         });
     }
 
