@@ -1,20 +1,28 @@
 import {IUserEstimate} from "./user-estimate";
 
-export interface IMessage {
-    type: MessageType;
+export interface IOutgoingMessage {
+    type: OutgoingMessageType;
     name?: string;
     estimate?: number;
+}
+
+export interface IIncomingMessage {
+    type: IncomingMessageType;
     finalEstimate?: number;
     estimates?: IUserEstimate[];
 }
 
-export enum MessageType {
-    Estimates = 'estimates', // in
-    FinalEstimate = 'final-estimate', // in
-    UserLeave = 'user-leave', // in
+export enum IncomingMessageType {
+    Estimates = 'estimates',
+    FinalEstimate = 'final-estimate',
+    UserLeave = 'user-leave',
+    Reset = 'reset',
+}
 
-    SetEstimate = 'set-estimate', // out
-    Accept = 'accept', // out
-    Reset = 'reset', // in-out
-    SetUserName = 'set-user-name' // out
+export enum OutgoingMessageType {
+    SetEstimate = 'set-estimate',
+    Accept = 'accept',
+    Reset = 'reset',
+    SetUserName = 'set-user-name',
+    UserLeave = 'user-leave',
 }

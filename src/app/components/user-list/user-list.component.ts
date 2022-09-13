@@ -2,7 +2,7 @@ import {Component, HostBinding, OnInit, ViewEncapsulation} from '@angular/core';
 import {WebSocketService} from "../../services/web-socket.service";
 import {Subscription} from "rxjs";
 import {IUserEstimate} from "../../interfaces/user-estimate";
-import {MessageType} from "../../interfaces/message";
+import {IncomingMessageType} from "../../interfaces/message";
 
 @Component({
     selector: 'app-user-list',
@@ -25,19 +25,19 @@ export class UserListComponent implements OnInit {
     public ngOnInit(): void {
         this._sub = this._webSocketService.websocket$.subscribe((msg) => {
             switch (msg.type) {
-                case MessageType.Reset:
+                case IncomingMessageType.Reset:
                     this.activeUsers = [];
                     this.cardsIsHidden = true;
                     break;
-                case MessageType.Estimates:
+                case IncomingMessageType.Estimates:
                     this.activeUsers = msg.estimates;
                     this.cardsIsHidden = true;
                     break;
-                case MessageType.FinalEstimate:
+                case IncomingMessageType.FinalEstimate:
                     this.activeUsers = msg.estimates;
                     this.cardsIsHidden = false;
                     break;
-                case MessageType.UserLeave:
+                case IncomingMessageType.UserLeave:
                 default:
                     this.activeUsers = msg.estimates;
                     break;

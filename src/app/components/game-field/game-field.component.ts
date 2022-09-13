@@ -1,6 +1,6 @@
 import {Component, HostBinding, Input, ViewEncapsulation} from '@angular/core';
 import {WebSocketService} from "../../services/web-socket.service";
-import {MessageType} from "../../interfaces/message";
+import {OutgoingMessageType} from "../../interfaces/message";
 
 @Component({
     selector: 'app-game-field',
@@ -21,7 +21,7 @@ export class GameFieldComponent {
 
     public sendEstimate(estimate: number) {
         this._webSocketService.websocket$.next({
-            type: MessageType.SetEstimate,
+            type: OutgoingMessageType.SetEstimate,
             name: this.name,
             estimate
         })

@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {WebSocketService} from "../../services/web-socket.service";
 import {filter, Subscription} from "rxjs";
-import {MessageType} from "../../interfaces/message";
+import {IncomingMessageType, OutgoingMessageType} from "../../interfaces/message";
 
 @Component({
     selector: 'app-estimate-view',
@@ -22,25 +22,25 @@ export class EstimateViewComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this._sub = this._webSocketService.websocket$.pipe(
-            filter((msg) => msg.type === MessageType.FinalEstimate
-            || msg.type === MessageType.Reset)
+            filter((msg) => msg.type === IncomingMessageType.FinalEstimate
+            || msg.type === IncomingMessageType.Reset)
         ).subscribe((msg) => {
-            if(msg.type === MessageType.FinalEstimate) {
+            if(msg.type === IncomingMessageType.FinalEstimate) {
                 this.finalEstimate = msg.finalEstimate;
             }
 
-            if(msg.type === MessageType.Reset) {
+            if(msg.type === IncomingMessageType.Reset) {
                 this.finalEstimate = null;
             }
         });
     }
 
     public reset() {
-        this._webSocketService.websocket$.next({type: MessageType.Reset});
+        this._webSocketService.websocket$.next({type: OutgoingMessageType.Reset});
     }
 
     public accept() {
-        this._webSocketService.websocket$.next({type: MessageType.Accept});
+        this._webSocketService.websocket$.next({type: OutgoingMessageType.Accept});
     }
 
     public ngOnDestroy(): void {

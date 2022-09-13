@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {FormBuilder} from '@angular/forms';
 import {Subscription} from "rxjs";
 import {WebSocketService} from "../../services/web-socket.service";
-import {MessageType} from "../../interfaces/message";
+import {OutgoingMessageType} from "../../interfaces/message";
 
 const SOCKET = 'ws://127.0.0.1:8000'
 
@@ -51,14 +51,14 @@ export class RoomPageComponent implements OnInit, OnDestroy {
     public onSubmit() {
         this._sub = this._webSocketService.websocket$.subscribe();
 
-        this._webSocketService.websocket$.next({type: MessageType.SetUserName});
+        this._webSocketService.websocket$.next({type: OutgoingMessageType.SetUserName});
         this.name = this.userInfo.value.name!;
     }
 
     @HostListener('window:beforeunload')
     public sendUserLeaveEvent() {
         this._webSocketService.websocket$.next({
-            type: MessageType.UserLeave,
+            type: OutgoingMessageType.UserLeave,
         })
     }
 
