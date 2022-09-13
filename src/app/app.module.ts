@@ -8,7 +8,7 @@ import {UserListComponent} from './components/user-list/user-list.component';
 import {EstimateViewComponent} from './components/estimate-view/estimate-view.component';
 import {GameFieldComponent} from './components/game-field/game-field.component';
 import {InitPageComponent} from './components/init-page/init-page.component';
-import {RoomPageComponent} from './components/game-page/room-page.component';
+import {RoomPageComponent} from './components/room-page/room-page.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";

@@ -1,6 +1,11 @@
-<button
-    *ngFor="let est of estimates"
-    (click)="sendEstimate(est)"
->
-    {{est}}
-</button>
+<div class="game-field__card-place">
+    <button
+        *ngFor="let est of estimates"
+        class="button game-field__card"
+        type="button"
+        (click)="sendEstimate(est)"
+    >
+        {{est}}
+    </button>
+</div>
+

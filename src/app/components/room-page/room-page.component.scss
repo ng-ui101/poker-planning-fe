@@ -1,0 +1,32 @@
+.room-page {
+    display: grid;
+    grid-template-rows: 32px 80px 160px 64px;
+
+    &__notification {
+        grid-row: 2;
+        margin: 0 auto;
+    }
+
+    &__form {
+        grid-row: 2;
+        margin: 0 auto;
+    }
+
+    &__user-list {
+        grid-row: 4;
+    }
+
+    &__estimate-view {
+        grid-row: 2;
+        margin: 0 auto;
+    }
+
+    &__game-field {
+        grid-row: 3;
+    }
+}
+
+.room-page-form {
+    display: grid;
+    gap: 8px
+}

@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+@import './assets/style.css';
+
+/* override body styles */
+.body {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: #420c79;
+}
+
+.label {
+    margin: 0 auto;
+}
+
+.input,
+.button {
+    border: 1px solid #94a7eb;
+    background-color: rgba(126, 150, 235, 0.43);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    color: #420c79;
+}
+
+.button {
+    cursor: pointer;
+}
+

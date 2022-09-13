@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostBinding, HostListener, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HttpService} from "../../services/http.service";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder} from '@angular/forms';
@@ -11,9 +11,12 @@ const SOCKET = 'ws://127.0.0.1:8000'
 @Component({
     selector: 'app-room-page',
     templateUrl: './room-page.component.html',
-    styleUrls: ['./room-page.component.scss']
+    styleUrls: ['./room-page.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class RoomPageComponent implements OnInit, OnDestroy {
+    @HostBinding('class.room-page') roomPage = true;
+
     public roomId: string = '';
     public roomIsActive: boolean = false;
     public name: string = '';

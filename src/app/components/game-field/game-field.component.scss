@@ -1,0 +1,15 @@
+.game-field {
+    display: flex;
+
+    &__card-place {
+        margin: 0 auto;
+        display: grid;
+        gap: 4px;
+        grid-template-columns: 56px 56px 56px 56px 56px;
+    }
+
+    &__card {
+        width: 48px;
+        height: 72px;
+    }
+}

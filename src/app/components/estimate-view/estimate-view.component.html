@@ -1,3 +1,10 @@
-<h2>{{finalEstimate}}</h2>
-<button (click)="reset()">reset</button>
-<button (click)="accept()">accept</button>
+<button class="button estimate-view__button" type="button" title="Reset estimates" (click)="reset()">
+    <i class="icon-loop2"></i>
+</button>
+
+<h2 class="estimate-view__estimate">{{finalEstimate | number:'0.0-2'}}</h2>
+
+<button class="button estimate-view__button" type="button" title="Accept estimates" (click)="accept()">
+    <i class="icon-checkmark"></i>
+</button>
+

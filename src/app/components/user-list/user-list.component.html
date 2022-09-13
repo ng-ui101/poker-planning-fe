@@ -1,6 +1,6 @@
-<table>
-    <tr *ngFor="let usr of activeUsers">
-        <td>{{usr.name}}</td>
-        <td [hidden]="cardsIsHidden">{{usr.estimate}}</td>
+<table class="user-list__users">
+    <tr *ngFor="let usr of activeUsers; index as i; trackBy: trackByFn">
+        <td class="user-list__name">{{usr.name}}</td>
+        <td class="user-list__estimate" [hidden]="cardsIsHidden">{{usr.estimate}}</td>
     </tr>
 </table>

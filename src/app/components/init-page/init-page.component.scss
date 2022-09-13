@@ -1,0 +1,9 @@
+.init-page {
+    display: grid;
+    grid-template-rows: 64px 32px 64px;
+
+    &__launch-button {
+        grid-row: 2;
+        margin: 0 auto;
+    }
+}

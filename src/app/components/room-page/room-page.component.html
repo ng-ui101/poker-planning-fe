@@ -1,0 +1,23 @@
+<div *ngIf="!roomIsActive" class="room-page__notification">The room is not found!</div>
+
+<ng-container *ngIf="roomIsActive">
+    <form
+        *ngIf="!name"
+        class="room-page__form room-page-form"
+        [formGroup]="userInfo"
+        (ngSubmit)="onSubmit()"
+    >
+        <label class="label">Enter your name first:</label>
+        <input class="input" id="name" type="text" formControlName="name">
+        <button class="button" type="submit">set name</button>
+    </form>
+
+    <ng-container *ngIf="name">
+        <app-estimate-view class="room-page__estimate-view"></app-estimate-view>
+
+        <app-game-field class="room-page__game-field" [name]="name"></app-game-field>
+
+        <app-user-list class="room-page__user-list"></app-user-list>
+    </ng-container>
+</ng-container>
+
